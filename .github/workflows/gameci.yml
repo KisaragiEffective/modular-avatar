@@ -1,3 +1,4 @@
+# This workflow is managed by gh actions-lock.
 #  MIT License
 #
 #  Copyright (c) 2022 anatawa12
@@ -91,7 +92,7 @@ jobs:
           fi
           echo check_name=$check_name >> $GITHUB_OUTPUT
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.4.0
         if: ${{ steps.setup.outputs.should_test == 'true' }}
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -131,14 +132,14 @@ jobs:
             cat $i | jq .version
           done
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v4.3.0
         if: ${{ steps.setup.outputs.should_test == 'true' }}
         with:
           path: Library
           key: Library-${{ steps.configure.outputs.unity_version }}-${{ matrix.sdk }}
           restore-keys: Library-
 
-      - uses: game-ci/unity-test-runner@v3
+      - uses: game-ci/unity-test-runner@v3.1.0
         id: gameci
         continue-on-error: ${{ steps.setup.outputs.can_fail == 'true' }}
         if: ${{ steps.setup.outputs.should_test == 'true' }}
@@ -192,7 +193,7 @@ jobs:
           echo matrix_outcome=$outcome >> $GITHUB_OUTPUT
           echo matrix_output=$output >> $GITHUB_OUTPUT
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4.6.2
         if: ${{ steps.setup.outputs.should_test == 'true' && matrix.sdk == 'vrcsdk' }}
         continue-on-error: true
         with:

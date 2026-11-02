@@ -1,3 +1,5 @@
+# This workflow is managed by gh actions-lock.
+
 name: Build documentation
 
 on:
@@ -29,14 +31,14 @@ jobs:
     name: Build documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4.4.0
         with:
           node-version: 18
       
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.4.0
         with:
           ref: ${{ inputs.ref || github.ref }} 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.4.0
         with:
           repository: bdunderscore/modular-avatar-images
           path: modular-avatar-images
@@ -53,7 +55,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "dir=$(cd docs~; yarn config get cacheFolder)" >> $GITHUB_OUTPUT
     
-      - uses: actions/cache@v4
+      - uses: actions/cache@v4.3.0
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -85,7 +87,7 @@ jobs:
           tar -cf docs.tar -C docs~/build .
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: ${{ inputs.artifact || 'docs' }}
           path: docs.tar
